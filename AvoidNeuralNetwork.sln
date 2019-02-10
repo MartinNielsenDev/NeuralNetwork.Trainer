@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralNetwork.Trainer", "AvoidNeuralNetwork\NeuralNetwork.Trainer.csproj", "{E6C6A3C1-41A9-428C-B2E0-DB342D2433EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		DEmo|Any CPU = DEmo|Any CPU
+		Release|Any CPU = Release|Any CPU
+		SOURCES|Any CPU = SOURCES|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E6C6A3C1-41A9-428C-B2E0-DB342D2433EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6C6A3C1-41A9-428C-B2E0-DB342D2433EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6C6A3C1-41A9-428C-B2E0-DB342D2433EE}.DEmo|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6C6A3C1-41A9-428C-B2E0-DB342D2433EE}.DEmo|Any CPU.Build.0 = Debug|Any CPU
+		{E6C6A3C1-41A9-428C-B2E0-DB342D2433EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6C6A3C1-41A9-428C-B2E0-DB342D2433EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6C6A3C1-41A9-428C-B2E0-DB342D2433EE}.SOURCES|Any CPU.ActiveCfg = Release|Any CPU
+		{E6C6A3C1-41A9-428C-B2E0-DB342D2433EE}.SOURCES|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {729A2307-57F7-4E87-9910-7B8CCFAB0DE3}
+	EndGlobalSection
+EndGlobal
