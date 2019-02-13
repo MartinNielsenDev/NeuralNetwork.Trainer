@@ -11,42 +11,38 @@ using System.Windows.Forms;
 
 namespace NeuralNetwork.Trainer
 {
-
     /// <summary>
     /// Summary description for Form1.
     /// </summary>
     public class GUI : Form
     {
         #region Variables
-        private PictureBox pictureBox1;
-        private TabControl tabControl1;
-        private Button button1;
-        private Label label15;
         private OpenFileDialog openFileDialog1;
         private SaveFileDialog saveFileDialog1;
         private OpenFileDialog openFileDialog2;
-        private Label label6;
-        private TabPage tabPage1;
-        private Label label17;
-        private ProgressBar progressBar1;
-        private Label label8;
-        private Button button5;
-        private Button button4;
-        private Button button3;
-        private Label label3;
         private OpenFileDialog openFileDialog3;
-        private Button button2;
-        private Label runningTimeLabel;
-        private Label label2;
-        private Label label5;
-        private Label label1;
-        private Label label4;
-        private Label label9;
-        private Label label7;
-        private TextBox iterationsTextBox;
+        private CheckBox alphabetCheckBox;
+        private Label matrixYLabel;
         private TextBox matrixHeightTextBox;
         private TextBox matrixWidthTextBox;
-        private CheckBox checkBox1;
+        private TextBox iterationsTextBox;
+        private Label matrixXLabel;
+        private Label iterationsLabel;
+        private Label testLabel3;
+        private Label testLabel2;
+        private Label testLabel1;
+        private Label runningTimeLabel;
+        private Button trainNetworkButton;
+        private Label recognizedLabel;
+        private Label recognizedResultLabel;
+        private Button createNetworkButton;
+        private Label errorLabel;
+        private ProgressBar progressBar;
+        private Label nodesLabel;
+        private Button saveNetworkButton;
+        private Button testNetworkButton;
+        private Label headerLabel;
+        private PictureBox testerPictureBox;
 
         /// <summary>
         /// Required designer variable.
@@ -81,276 +77,34 @@ namespace NeuralNetwork.Trainer
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label9 = new System.Windows.Forms.Label();
-            this.matrixHeightTextBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.matrixWidthTextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.iterationsTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.runningTimeLabel = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label17 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label8 = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog3 = new System.Windows.Forms.OpenFileDialog();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.alphabetCheckBox = new System.Windows.Forms.CheckBox();
+            this.matrixYLabel = new System.Windows.Forms.Label();
+            this.matrixHeightTextBox = new System.Windows.Forms.TextBox();
+            this.matrixWidthTextBox = new System.Windows.Forms.TextBox();
+            this.iterationsTextBox = new System.Windows.Forms.TextBox();
+            this.matrixXLabel = new System.Windows.Forms.Label();
+            this.iterationsLabel = new System.Windows.Forms.Label();
+            this.testLabel3 = new System.Windows.Forms.Label();
+            this.testLabel2 = new System.Windows.Forms.Label();
+            this.testLabel1 = new System.Windows.Forms.Label();
+            this.runningTimeLabel = new System.Windows.Forms.Label();
+            this.trainNetworkButton = new System.Windows.Forms.Button();
+            this.recognizedLabel = new System.Windows.Forms.Label();
+            this.recognizedResultLabel = new System.Windows.Forms.Label();
+            this.createNetworkButton = new System.Windows.Forms.Button();
+            this.errorLabel = new System.Windows.Forms.Label();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.nodesLabel = new System.Windows.Forms.Label();
+            this.saveNetworkButton = new System.Windows.Forms.Button();
+            this.testNetworkButton = new System.Windows.Forms.Button();
+            this.headerLabel = new System.Windows.Forms.Label();
+            this.testerPictureBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.testerPictureBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox1.Location = new System.Drawing.Point(392, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(200, 384);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(392, 384);
-            this.tabControl1.TabIndex = 1;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.checkBox1);
-            this.tabPage1.Controls.Add(this.label9);
-            this.tabPage1.Controls.Add(this.matrixHeightTextBox);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.matrixWidthTextBox);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.iterationsTextBox);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.runningTimeLabel);
-            this.tabPage1.Controls.Add(this.button2);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.label15);
-            this.tabPage1.Controls.Add(this.button1);
-            this.tabPage1.Controls.Add(this.label17);
-            this.tabPage1.Controls.Add(this.progressBar1);
-            this.tabPage1.Controls.Add(this.label8);
-            this.tabPage1.Controls.Add(this.button5);
-            this.tabPage1.Controls.Add(this.button4);
-            this.tabPage1.Controls.Add(this.button3);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(384, 358);
-            this.tabPage1.TabIndex = 2;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(286, 276);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(48, 13);
-            this.label9.TabIndex = 26;
-            this.label9.Text = "Matrix Y:";
-            // 
-            // matrixHeightTextBox
-            // 
-            this.matrixHeightTextBox.Location = new System.Drawing.Point(343, 273);
-            this.matrixHeightTextBox.Name = "matrixHeightTextBox";
-            this.matrixHeightTextBox.Size = new System.Drawing.Size(37, 20);
-            this.matrixHeightTextBox.TabIndex = 25;
-            this.matrixHeightTextBox.Text = "10";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(286, 253);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(48, 13);
-            this.label7.TabIndex = 24;
-            this.label7.Text = "Matrix X:";
-            // 
-            // matrixWidthTextBox
-            // 
-            this.matrixWidthTextBox.Location = new System.Drawing.Point(343, 250);
-            this.matrixWidthTextBox.Name = "matrixWidthTextBox";
-            this.matrixWidthTextBox.Size = new System.Drawing.Size(37, 20);
-            this.matrixWidthTextBox.TabIndex = 23;
-            this.matrixWidthTextBox.Text = "10";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(286, 229);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 13);
-            this.label4.TabIndex = 22;
-            this.label4.Text = "Iterations:";
-            // 
-            // iterationsTextBox
-            // 
-            this.iterationsTextBox.Location = new System.Drawing.Point(343, 226);
-            this.iterationsTextBox.Name = "iterationsTextBox";
-            this.iterationsTextBox.Size = new System.Drawing.Size(37, 20);
-            this.iterationsTextBox.TabIndex = 21;
-            this.iterationsTextBox.Text = "1";
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(17, 296);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(226, 17);
-            this.label2.TabIndex = 20;
-            this.label2.Text = "2018 Test: ";
-            // 
-            // label5
-            // 
-            this.label5.Location = new System.Drawing.Point(17, 276);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(226, 17);
-            this.label5.TabIndex = 19;
-            this.label5.Text = "8px Test: ";
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(17, 256);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(226, 17);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "24px Test: ";
-            // 
-            // runningTimeLabel
-            // 
-            this.runningTimeLabel.Location = new System.Drawing.Point(14, 236);
-            this.runningTimeLabel.Name = "runningTimeLabel";
-            this.runningTimeLabel.Size = new System.Drawing.Size(226, 17);
-            this.runningTimeLabel.TabIndex = 17;
-            this.runningTimeLabel.Text = "Running Time:";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(16, 95);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(120, 24);
-            this.button2.TabIndex = 16;
-            this.button2.Text = "2. Train Network";
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // label6
-            // 
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(145, 88);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(236, 27);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "RECOGNIZED";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label15
-            // 
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(145, 115);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(236, 45);
-            this.label15.TabIndex = 13;
-            this.label15.Text = "A";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(16, 65);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 24);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "1. Create Network";
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label17
-            // 
-            this.label17.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label17.Location = new System.Drawing.Point(0, 318);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(384, 16);
-            this.label17.TabIndex = 9;
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar1.Location = new System.Drawing.Point(0, 334);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(384, 24);
-            this.progressBar1.TabIndex = 8;
-            // 
-            // label8
-            // 
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(3, 31);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(136, 30);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "outputNodes: 0";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(16, 189);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(120, 24);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "Load trained network";
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(16, 157);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(120, 24);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Save trained network";
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(16, 125);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(120, 24);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "3. Test Network";
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // label3
-            // 
-            this.label3.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.Window;
-            this.label3.Location = new System.Drawing.Point(0, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(384, 32);
-            this.label3.TabIndex = 1;
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // openFileDialog1
             // 
@@ -380,32 +134,267 @@ namespace NeuralNetwork.Trainer
             this.openFileDialog3.Multiselect = true;
             this.openFileDialog3.Title = "Open training images";
             // 
-            // checkBox1
+            // alphabetCheckBox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(302, 299);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(68, 17);
-            this.checkBox1.TabIndex = 27;
-            this.checkBox1.Text = "Alphabet";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.alphabetCheckBox.AutoSize = true;
+            this.alphabetCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.alphabetCheckBox.Location = new System.Drawing.Point(349, 324);
+            this.alphabetCheckBox.Name = "alphabetCheckBox";
+            this.alphabetCheckBox.Size = new System.Drawing.Size(92, 24);
+            this.alphabetCheckBox.TabIndex = 48;
+            this.alphabetCheckBox.Text = "Alphabet";
+            this.alphabetCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // matrixYLabel
+            // 
+            this.matrixYLabel.AutoSize = true;
+            this.matrixYLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.matrixYLabel.Location = new System.Drawing.Point(334, 276);
+            this.matrixYLabel.Name = "matrixYLabel";
+            this.matrixYLabel.Size = new System.Drawing.Size(70, 20);
+            this.matrixYLabel.TabIndex = 47;
+            this.matrixYLabel.Text = "Matrix Y:";
+            // 
+            // matrixHeightTextBox
+            // 
+            this.matrixHeightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.matrixHeightTextBox.Location = new System.Drawing.Point(421, 273);
+            this.matrixHeightTextBox.Name = "matrixHeightTextBox";
+            this.matrixHeightTextBox.Size = new System.Drawing.Size(37, 26);
+            this.matrixHeightTextBox.TabIndex = 46;
+            this.matrixHeightTextBox.Text = "8";
+            // 
+            // matrixWidthTextBox
+            // 
+            this.matrixWidthTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.matrixWidthTextBox.Location = new System.Drawing.Point(421, 250);
+            this.matrixWidthTextBox.Name = "matrixWidthTextBox";
+            this.matrixWidthTextBox.Size = new System.Drawing.Size(37, 26);
+            this.matrixWidthTextBox.TabIndex = 44;
+            this.matrixWidthTextBox.Text = "5";
+            // 
+            // iterationsTextBox
+            // 
+            this.iterationsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.iterationsTextBox.Location = new System.Drawing.Point(421, 226);
+            this.iterationsTextBox.Name = "iterationsTextBox";
+            this.iterationsTextBox.Size = new System.Drawing.Size(37, 26);
+            this.iterationsTextBox.TabIndex = 42;
+            this.iterationsTextBox.Text = "1";
+            // 
+            // matrixXLabel
+            // 
+            this.matrixXLabel.AutoSize = true;
+            this.matrixXLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.matrixXLabel.Location = new System.Drawing.Point(334, 253);
+            this.matrixXLabel.Name = "matrixXLabel";
+            this.matrixXLabel.Size = new System.Drawing.Size(70, 20);
+            this.matrixXLabel.TabIndex = 45;
+            this.matrixXLabel.Text = "Matrix X:";
+            // 
+            // iterationsLabel
+            // 
+            this.iterationsLabel.AutoSize = true;
+            this.iterationsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.iterationsLabel.Location = new System.Drawing.Point(334, 229);
+            this.iterationsLabel.Name = "iterationsLabel";
+            this.iterationsLabel.Size = new System.Drawing.Size(80, 20);
+            this.iterationsLabel.TabIndex = 43;
+            this.iterationsLabel.Text = "Iterations:";
+            // 
+            // testLabel3
+            // 
+            this.testLabel3.AutoSize = true;
+            this.testLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.testLabel3.Location = new System.Drawing.Point(17, 307);
+            this.testLabel3.Name = "testLabel3";
+            this.testLabel3.Size = new System.Drawing.Size(139, 20);
+            this.testLabel3.TabIndex = 41;
+            this.testLabel3.Text = "Numbers Test: 0%";
+            // 
+            // testLabel2
+            // 
+            this.testLabel2.AutoSize = true;
+            this.testLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.testLabel2.Location = new System.Drawing.Point(17, 282);
+            this.testLabel2.Name = "testLabel2";
+            this.testLabel2.Size = new System.Drawing.Size(130, 20);
+            this.testLabel2.TabIndex = 40;
+            this.testLabel2.Text = "Ratings Test: 0%";
+            // 
+            // testLabel1
+            // 
+            this.testLabel1.AutoSize = true;
+            this.testLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.testLabel1.Location = new System.Drawing.Point(17, 257);
+            this.testLabel1.Name = "testLabel1";
+            this.testLabel1.Size = new System.Drawing.Size(109, 20);
+            this.testLabel1.TabIndex = 39;
+            this.testLabel1.Text = "24px Test: 0%";
+            // 
+            // runningTimeLabel
+            // 
+            this.runningTimeLabel.AutoSize = true;
+            this.runningTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.runningTimeLabel.Location = new System.Drawing.Point(17, 222);
+            this.runningTimeLabel.Name = "runningTimeLabel";
+            this.runningTimeLabel.Size = new System.Drawing.Size(145, 20);
+            this.runningTimeLabel.TabIndex = 38;
+            this.runningTimeLabel.Text = "Running Time: 0ms";
+            // 
+            // trainNetworkButton
+            // 
+            this.trainNetworkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.trainNetworkButton.Location = new System.Drawing.Point(16, 116);
+            this.trainNetworkButton.Name = "trainNetworkButton";
+            this.trainNetworkButton.Size = new System.Drawing.Size(120, 24);
+            this.trainNetworkButton.TabIndex = 37;
+            this.trainNetworkButton.Text = "2. Train Network";
+            this.trainNetworkButton.Click += new System.EventHandler(this.trainNetwork_Click);
+            // 
+            // recognizedLabel
+            // 
+            this.recognizedLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.recognizedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recognizedLabel.Location = new System.Drawing.Point(144, 52);
+            this.recognizedLabel.Name = "recognizedLabel";
+            this.recognizedLabel.Size = new System.Drawing.Size(325, 30);
+            this.recognizedLabel.TabIndex = 36;
+            this.recognizedLabel.Text = "RECOGNIZED";
+            this.recognizedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // recognizedResultLabel
+            // 
+            this.recognizedResultLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.recognizedResultLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recognizedResultLabel.Location = new System.Drawing.Point(142, 85);
+            this.recognizedResultLabel.Name = "recognizedResultLabel";
+            this.recognizedResultLabel.Size = new System.Drawing.Size(327, 117);
+            this.recognizedResultLabel.TabIndex = 35;
+            this.recognizedResultLabel.Text = "A";
+            this.recognizedResultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // createNetworkButton
+            // 
+            this.createNetworkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.createNetworkButton.Location = new System.Drawing.Point(16, 86);
+            this.createNetworkButton.Name = "createNetworkButton";
+            this.createNetworkButton.Size = new System.Drawing.Size(120, 24);
+            this.createNetworkButton.TabIndex = 29;
+            this.createNetworkButton.Text = "1. Create Network";
+            this.createNetworkButton.Click += new System.EventHandler(this.createNetwork_Click);
+            // 
+            // errorLabel
+            // 
+            this.errorLabel.AutoSize = true;
+            this.errorLabel.BackColor = System.Drawing.Color.Transparent;
+            this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorLabel.Location = new System.Drawing.Point(17, 350);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(145, 20);
+            this.errorLabel.TabIndex = 34;
+            this.errorLabel.Text = "Error: 0  Iteration: 0";
+            this.errorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // progressBar
+            // 
+            this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressBar.Location = new System.Drawing.Point(0, 373);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(669, 24);
+            this.progressBar.TabIndex = 33;
+            // 
+            // nodesLabel
+            // 
+            this.nodesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
+            this.nodesLabel.Location = new System.Drawing.Point(3, 52);
+            this.nodesLabel.Name = "nodesLabel";
+            this.nodesLabel.Size = new System.Drawing.Size(136, 30);
+            this.nodesLabel.TabIndex = 32;
+            this.nodesLabel.Text = "Nodes: 0";
+            this.nodesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // saveNetworkButton
+            // 
+            this.saveNetworkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.saveNetworkButton.Location = new System.Drawing.Point(16, 178);
+            this.saveNetworkButton.Name = "saveNetworkButton";
+            this.saveNetworkButton.Size = new System.Drawing.Size(120, 24);
+            this.saveNetworkButton.TabIndex = 31;
+            this.saveNetworkButton.Text = "Save Network";
+            this.saveNetworkButton.Click += new System.EventHandler(this.SaveNetwork_Click);
+            // 
+            // testNetworkButton
+            // 
+            this.testNetworkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.testNetworkButton.Location = new System.Drawing.Point(16, 146);
+            this.testNetworkButton.Name = "testNetworkButton";
+            this.testNetworkButton.Size = new System.Drawing.Size(120, 24);
+            this.testNetworkButton.TabIndex = 30;
+            this.testNetworkButton.Text = "3. Test Network";
+            this.testNetworkButton.Click += new System.EventHandler(this.TestButton_Click);
+            // 
+            // headerLabel
+            // 
+            this.headerLabel.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.headerLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.headerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headerLabel.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.headerLabel.Location = new System.Drawing.Point(0, 0);
+            this.headerLabel.Name = "headerLabel";
+            this.headerLabel.Size = new System.Drawing.Size(669, 32);
+            this.headerLabel.TabIndex = 28;
+            this.headerLabel.Text = "NeuralNetwork.Trainer for Better Overwatch";
+            this.headerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // testerPictureBox
+            // 
+            this.testerPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.testerPictureBox.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.testerPictureBox.Location = new System.Drawing.Point(469, 32);
+            this.testerPictureBox.Name = "testerPictureBox";
+            this.testerPictureBox.Size = new System.Drawing.Size(200, 341);
+            this.testerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.testerPictureBox.TabIndex = 0;
+            this.testerPictureBox.TabStop = false;
+            this.testerPictureBox.Click += new System.EventHandler(this.testerPictureBox_Click);
             // 
             // GUI
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(592, 384);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.pictureBox1);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(669, 397);
+            this.Controls.Add(this.alphabetCheckBox);
+            this.Controls.Add(this.matrixYLabel);
+            this.Controls.Add(this.matrixHeightTextBox);
+            this.Controls.Add(this.matrixWidthTextBox);
+            this.Controls.Add(this.iterationsTextBox);
+            this.Controls.Add(this.matrixXLabel);
+            this.Controls.Add(this.iterationsLabel);
+            this.Controls.Add(this.testLabel3);
+            this.Controls.Add(this.testLabel2);
+            this.Controls.Add(this.testLabel1);
+            this.Controls.Add(this.runningTimeLabel);
+            this.Controls.Add(this.trainNetworkButton);
+            this.Controls.Add(this.recognizedLabel);
+            this.Controls.Add(this.recognizedResultLabel);
+            this.Controls.Add(this.createNetworkButton);
+            this.Controls.Add(this.errorLabel);
+            this.Controls.Add(this.progressBar);
+            this.Controls.Add(this.nodesLabel);
+            this.Controls.Add(this.saveNetworkButton);
+            this.Controls.Add(this.testNetworkButton);
+            this.Controls.Add(this.headerLabel);
+            this.Controls.Add(this.testerPictureBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "GUI";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Neural Network Trainer";
             this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.testerPictureBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
         #endregion
@@ -430,7 +419,6 @@ namespace NeuralNetwork.Trainer
         public static string workingPath = String.Empty;
         public class OCRNetwork : BackPropagationRPROPNetwork
         {
-
             private GUI owner;
             public OCRNetwork(GUI owner, int[] nodesInEachLayer) : base(nodesInEachLayer)
             {
@@ -477,13 +465,13 @@ namespace NeuralNetwork.Trainer
             }
             private bool GetRandomInput(int index)
             {
-                trainingSet = new string[owner.checkBox1.Checked == true ? 26 : 10];
+                trainingSet = new string[owner.alphabetCheckBox.Checked == true ? 26 : 10];
 
                 for (int i = 0; i < trainingSet.Length; i++)
                 {
                     string randomFile;
                     string[] listOfFiles;
-                    if (owner.checkBox1.Checked)
+                    if (owner.alphabetCheckBox.Checked)
                     {
                         listOfFiles = Directory.GetFiles(workingPath, Convert.ToChar('A' + i) + "*.png"); // for the alphabet
                     }
@@ -513,12 +501,11 @@ namespace NeuralNetwork.Trainer
             {
                 int iteration = 0;
                 Stopwatch timer = new Stopwatch();
-                timer.Start();
+                timer.Restart();
 
                 for (int inputSets = 0; inputSets < Convert.ToInt32(owner.iterationsTextBox.Text); inputSets++)
                 {
                     Debug.WriteLine("Running inputset " + (inputSets + 1));
-                    timer.Restart();
                     GetRandomInput(inputSets);
                     patterns = owner.CreateTrainingPatterns();
                     double error = 0, currentError = 1;
@@ -557,14 +544,14 @@ namespace NeuralNetwork.Trainer
                         if ((iteration % 2) == 0)
                         {
                             currentError = (error / OutputNodesCount);
-                            owner.label17.Text = "Error: " + currentError.ToString() + "  Iteration: " + iteration.ToString();
+                            owner.errorLabel.Text = "Error: " + currentError.ToString() + "  Iteration: " + iteration.ToString();
                         }
-                        owner.progressBar1.Value = good;
+                        owner.progressBar.Value = good;
                         owner.runningTimeLabel.Text = "Running Time: " + (double)timer.ElapsedMilliseconds + "ms";
                     }
 
-                    owner.label17.Text = "Error: " + currentError.ToString() + "  Iteration: " + iteration.ToString();
-                    owner.progressBar1.Value = good;
+                    owner.errorLabel.Text = "Error: " + currentError.ToString() + "  Iteration: " + iteration.ToString();
+                    owner.progressBar.Value = good;
 
                 }
 
@@ -637,56 +624,20 @@ namespace NeuralNetwork.Trainer
             return src;
         }
 
-        private static Bitmap Downscale(Bitmap original)
-        {
-            double widthPercent = (double)original.Width / 1920 * 1366;
-            double heightPercent = (double)original.Height / 1080 * 768;
-            //double widthPercent = (double)original.Width * 0.38;
-            //double heightPercent = (double)original.Height * 0.38;
-            int width = (int)widthPercent;
-            int height = (int)heightPercent;
-            Bitmap downScaled = new Bitmap(width, height);
-
-            using (Graphics graphics = Graphics.FromImage(downScaled))
-            {
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.DrawImage(original, 0, 0, downScaled.Width, downScaled.Height);
-            }
-
-            return downScaled;
-        }
-
-        private static Bitmap Upscale(Bitmap original)
-        {
-            double widthPercent = (double)original.Width / 1366 * 1920;
-            double heightPercent = (double)original.Height / 768 * 1080;
-            int width = (int)widthPercent + 1;
-            int height = (int)heightPercent + 1;
-            Bitmap upScaled = new Bitmap(width, height);
-
-            using (Graphics graphics = Graphics.FromImage(upScaled))
-            {
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.DrawImage(original, 0, 0, upScaled.Width, upScaled.Height);
-            }
-
-            return upScaled;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void createNetwork_Click(object sender, EventArgs e)
         {
 
             if (openFileDialog3.ShowDialog(this) == DialogResult.OK)
             {
                 workingPath = Path.GetDirectoryName(openFileDialog3.FileName);
             }
-            int inputs = checkBox1.Checked == true ? 26 : 10;
-            progressBar1.Maximum = inputs;
+            int inputs = alphabetCheckBox.Checked == true ? 26 : 10;
+            progressBar.Maximum = inputs;
             backpropNetwork = new OCRNetwork(this, new int[3] { Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text), (Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text) + inputs) / 2, inputs });
-            label8.Text = "outputNodes: " + inputs;
+            nodesLabel.Text = "outputNodes: " + inputs;
         }
 
-        private void button2_Click(object sender, System.EventArgs e)
+        private void trainNetwork_Click(object sender, System.EventArgs e)
         {
             if (backpropNetwork == null)
             {
@@ -696,7 +647,7 @@ namespace NeuralNetwork.Trainer
             while (true)
             {
                 if (IsTerminated) return;
-                int inputs = checkBox1.Checked == true ? 26 : 10;
+                int inputs = alphabetCheckBox.Checked == true ? 26 : 10;
                 backpropNetwork = new OCRNetwork(this, new int[3] { Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text), (Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text) + inputs) / 2, inputs });
 
                 backpropNetwork.Train(trainingPatterns);
@@ -704,7 +655,7 @@ namespace NeuralNetwork.Trainer
                 break;
             }
         }
-        private void button3_Click(object sender, EventArgs e)
+        private void TestButton_Click(object sender, EventArgs e)
         {
             if (backpropNetwork == null)
             {
@@ -712,16 +663,16 @@ namespace NeuralNetwork.Trainer
                 return;
             }
             testTimer.Restart();
-            if (checkBox1.Checked)
+            if (alphabetCheckBox.Checked)
             {
-                label5.Text = "Big Test: " + Test("\\..\\..\\TrainData\\maps\\").ToString() + "%";
-                label2.Text = "2018 Test: " + Test("\\..\\..\\TrainData\\maps\\2018\\").ToString() + "%";
+                testLabel2.Text = "Big Test: " + Test("\\..\\..\\TrainData\\maps\\").ToString() + "%";
+                testLabel3.Text = "2018 Test: " + Test("\\..\\..\\TrainData\\maps\\2018\\").ToString() + "%";
             }
             else
             {
-                label1.Text = "24px Test: " + Test("\\..\\..\\TrainData\\stats\\24px\\").ToString() + "%";
-                label5.Text = "8px Test: " + Test("\\..\\..\\TrainData\\stats\\8px\\").ToString() + "%";
-                label2.Text = "2018 Test: " + Test("\\..\\..\\TrainData\\stats\\2018\\").ToString() + "%";
+                testLabel1.Text = "24px Test: " + Test("\\..\\..\\TrainData\\numbers\\24px\\").ToString() + "%";
+                testLabel2.Text = "Ratings Test: " + Test("\\..\\..\\TrainData\\skillratings\\2019\\").ToString() + "%";
+                testLabel3.Text = "Numbers Test: " + Test("\\..\\..\\TrainData\\numbers\\2018\\").ToString() + "%";
             }
             testTimer.Stop();
         }
@@ -738,7 +689,7 @@ namespace NeuralNetwork.Trainer
                 {
                     string randomFile;
                     string[] listOfFiles;
-                    if (checkBox1.Checked)
+                    if (alphabetCheckBox.Checked)
                     {
                         listOfFiles = Directory.GetFiles(Directory.GetCurrentDirectory() + path, Convert.ToChar('A' + j) + "*.png"); // for the alphabet
                     }
@@ -777,7 +728,7 @@ namespace NeuralNetwork.Trainer
             }
             return Math.Floor(((double)correct / (double)trainingSet.Length) * 100 / iterations);
         }
-        private void button4_Click(object sender, System.EventArgs e)
+        private void SaveNetwork_Click(object sender, System.EventArgs e)
         {
             if (backpropNetwork == null)
             {
@@ -788,21 +739,12 @@ namespace NeuralNetwork.Trainer
                 backpropNetwork.SaveToFile(saveFileDialog1.FileName);
         }
 
-        private void button5_Click(object sender, System.EventArgs e)
-        {
-            if (backpropNetwork == null)
-            {
-                MessageBox.Show("Network is not yet created.");
-                return;
-            }
-        }
-
         private void Form1_Closing(object sender, CancelEventArgs e)
         {
             IsTerminated = true;
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void testerPictureBox_Click(object sender, EventArgs e)
         {
             if (backpropNetwork == null)
             {
@@ -824,9 +766,9 @@ namespace NeuralNetwork.Trainer
                     backpropNetwork.InputNode(i).Value = aInput[i];
                 }
                 backpropNetwork.Run();
-                label15.Text = Convert.ToChar('A' + backpropNetwork.BestNodeIndex).ToString() + "(" + backpropNetwork.BestNodeIndex + ")";
-                pictureBox1.BackgroundImage = new Bitmap(trainingSet[backpropNetwork.BestNodeIndex]);
-                pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
+                recognizedResultLabel.Text = Convert.ToChar('A' + backpropNetwork.BestNodeIndex).ToString() + "(" + backpropNetwork.BestNodeIndex + ")";
+                testerPictureBox.BackgroundImage = new Bitmap(trainingSet[backpropNetwork.BestNodeIndex]);
+                testerPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
             }
         }
     }

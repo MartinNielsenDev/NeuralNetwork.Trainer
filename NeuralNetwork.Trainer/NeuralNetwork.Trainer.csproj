@@ -19,7 +19,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>NeuralNetwork.Trainer</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <StartupObject>NeuralNetwork.Trainer.GUI</StartupObject>
+    <StartupObject>NeuralNetwork.Trainer.Program</StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -69,6 +69,7 @@
     <DebugType>none</DebugType>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
@@ -100,8 +101,18 @@
     <Compile Include="NeuralNetwork\NeuroCustom.cs" />
     <Compile Include="NeuralNetwork\NeuroPattern.cs" />
     <Compile Include="NeuralNetwork\NeuroSon.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="GUI.resx">
       <DependentUpon>GUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
