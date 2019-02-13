@@ -43,6 +43,7 @@ namespace NeuralNetwork.Trainer
         private Button testNetworkButton;
         private Label headerLabel;
         private PictureBox testerPictureBox;
+        private Button abortButton;
 
         /// <summary>
         /// Required designer variable.
@@ -103,6 +104,7 @@ namespace NeuralNetwork.Trainer
             this.testNetworkButton = new System.Windows.Forms.Button();
             this.headerLabel = new System.Windows.Forms.Label();
             this.testerPictureBox = new System.Windows.Forms.PictureBox();
+            this.abortButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.testerPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -138,12 +140,13 @@ namespace NeuralNetwork.Trainer
             // 
             this.alphabetCheckBox.AutoSize = true;
             this.alphabetCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.alphabetCheckBox.Location = new System.Drawing.Point(349, 324);
+            this.alphabetCheckBox.Location = new System.Drawing.Point(349, 336);
             this.alphabetCheckBox.Name = "alphabetCheckBox";
             this.alphabetCheckBox.Size = new System.Drawing.Size(92, 24);
             this.alphabetCheckBox.TabIndex = 48;
             this.alphabetCheckBox.Text = "Alphabet";
             this.alphabetCheckBox.UseVisualStyleBackColor = true;
+            this.alphabetCheckBox.CheckedChanged += new System.EventHandler(this.alphabetCheckBox_CheckedChanged);
             // 
             // matrixYLabel
             // 
@@ -163,6 +166,7 @@ namespace NeuralNetwork.Trainer
             this.matrixHeightTextBox.Size = new System.Drawing.Size(37, 26);
             this.matrixHeightTextBox.TabIndex = 46;
             this.matrixHeightTextBox.Text = "8";
+            this.matrixHeightTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this._KeyDown);
             // 
             // matrixWidthTextBox
             // 
@@ -172,6 +176,7 @@ namespace NeuralNetwork.Trainer
             this.matrixWidthTextBox.Size = new System.Drawing.Size(37, 26);
             this.matrixWidthTextBox.TabIndex = 44;
             this.matrixWidthTextBox.Text = "5";
+            this.matrixWidthTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this._KeyDown);
             // 
             // iterationsTextBox
             // 
@@ -359,11 +364,22 @@ namespace NeuralNetwork.Trainer
             this.testerPictureBox.TabStop = false;
             this.testerPictureBox.Click += new System.EventHandler(this.testerPictureBox_Click);
             // 
+            // abortButton
+            // 
+            this.abortButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.abortButton.Location = new System.Drawing.Point(361, 306);
+            this.abortButton.Name = "abortButton";
+            this.abortButton.Size = new System.Drawing.Size(68, 24);
+            this.abortButton.TabIndex = 49;
+            this.abortButton.Text = "Abort";
+            this.abortButton.Click += new System.EventHandler(this.abortButton_Click);
+            // 
             // GUI
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(669, 397);
+            this.Controls.Add(this.abortButton);
             this.Controls.Add(this.alphabetCheckBox);
             this.Controls.Add(this.matrixYLabel);
             this.Controls.Add(this.matrixHeightTextBox);
@@ -399,16 +415,6 @@ namespace NeuralNetwork.Trainer
         }
         #endregion
 
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GUI());
-        }
         #endregion
         private static Stopwatch testTimer = new Stopwatch();
         public static string[] trainingSet = { };
@@ -473,11 +479,11 @@ namespace NeuralNetwork.Trainer
                     string[] listOfFiles;
                     if (owner.alphabetCheckBox.Checked)
                     {
-                        listOfFiles = Directory.GetFiles(workingPath, Convert.ToChar('A' + i) + "*.png"); // for the alphabet
+                        listOfFiles = Directory.GetFiles(workingPath, Convert.ToChar('A' + i) + "*.png");
                     }
                     else
                     {
-                        listOfFiles = Directory.GetFiles(workingPath, i + "*.png"); // for numbers
+                        listOfFiles = Directory.GetFiles(workingPath, i + "*.png");
                     }
                     if (listOfFiles.Length == 0)
                     {
@@ -506,14 +512,14 @@ namespace NeuralNetwork.Trainer
                 for (int inputSets = 0; inputSets < Convert.ToInt32(owner.iterationsTextBox.Text); inputSets++)
                 {
                     Debug.WriteLine("Running inputset " + (inputSets + 1));
-                    GetRandomInput(inputSets);
+                    if (!GetRandomInput(inputSets)) break;
                     patterns = owner.CreateTrainingPatterns();
                     double error = 0, currentError = 1;
                     int good = 0;
 
                     while (good < patterns.Count)
                     {
-                        if (IsTerminated || timer.ElapsedMilliseconds > 8000) return;
+                        if (IsTerminated) return;
                         error = 0;
                         good = 0;
 
@@ -524,7 +530,7 @@ namespace NeuralNetwork.Trainer
                                 nodes[k].Value = patterns[i].Input[k];
                             }
 
-                            AddNoiseToInputPattern((int)Random(0, 2));
+                            AddNoiseToInputPattern((int)Random(1, 2));
                             Run();
                             for (int k = 0; k < OutputNodesCount; k++)
                             {
@@ -626,7 +632,7 @@ namespace NeuralNetwork.Trainer
 
         private void createNetwork_Click(object sender, EventArgs e)
         {
-
+            IsTerminated = false;
             if (openFileDialog3.ShowDialog(this) == DialogResult.OK)
             {
                 workingPath = Path.GetDirectoryName(openFileDialog3.FileName);
@@ -634,29 +640,25 @@ namespace NeuralNetwork.Trainer
             int inputs = alphabetCheckBox.Checked == true ? 26 : 10;
             progressBar.Maximum = inputs;
             backpropNetwork = new OCRNetwork(this, new int[3] { Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text), (Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text) + inputs) / 2, inputs });
-            nodesLabel.Text = "outputNodes: " + inputs;
+            nodesLabel.Text = "Nodes: " + inputs;
         }
 
         private void trainNetwork_Click(object sender, System.EventArgs e)
         {
+            IsTerminated = false;
             if (backpropNetwork == null)
             {
                 MessageBox.Show("Create network first");
                 return;
             }
-            while (true)
-            {
                 if (IsTerminated) return;
                 int inputs = alphabetCheckBox.Checked == true ? 26 : 10;
                 backpropNetwork = new OCRNetwork(this, new int[3] { Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text), (Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text) + inputs) / 2, inputs });
-
                 backpropNetwork.Train(trainingPatterns);
-
-                break;
-            }
         }
         private void TestButton_Click(object sender, EventArgs e)
         {
+            IsTerminated = false;
             if (backpropNetwork == null)
             {
                 MessageBox.Show("Create network first");
@@ -665,14 +667,14 @@ namespace NeuralNetwork.Trainer
             testTimer.Restart();
             if (alphabetCheckBox.Checked)
             {
-                testLabel2.Text = "Big Test: " + Test("\\..\\..\\TrainData\\maps\\").ToString() + "%";
-                testLabel3.Text = "2018 Test: " + Test("\\..\\..\\TrainData\\maps\\2018\\").ToString() + "%";
+                //testLabel2.Text = "Score Test: " + Test("\\..\\..\\TrainData\\score\\").ToString() + "%";
+                testLabel2.Text = "Maps Test: " + Test("\\..\\..\\TrainData\\maps\\test_data\\").ToString() + "%";
+                testLabel3.Text = "Maps Test: " + Test("\\..\\..\\TrainData\\maps\\train_data\\").ToString() + "%";
             }
             else
             {
-                testLabel1.Text = "24px Test: " + Test("\\..\\..\\TrainData\\numbers\\24px\\").ToString() + "%";
-                testLabel2.Text = "Ratings Test: " + Test("\\..\\..\\TrainData\\skillratings\\2019\\").ToString() + "%";
-                testLabel3.Text = "Numbers Test: " + Test("\\..\\..\\TrainData\\numbers\\2018\\").ToString() + "%";
+                testLabel2.Text = "Ratings Test: " + Test("\\..\\..\\TrainData\\ratings\\test_data\\").ToString() + "%";
+                testLabel3.Text = "Numbers Test: " + Test("\\..\\..\\TrainData\\numbers\\test_data\\").ToString() + "%";
             }
             testTimer.Stop();
         }
@@ -770,6 +772,23 @@ namespace NeuralNetwork.Trainer
                 testerPictureBox.BackgroundImage = new Bitmap(trainingSet[backpropNetwork.BestNodeIndex]);
                 testerPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
             }
+        }
+
+        private void abortButton_Click(object sender, EventArgs e)
+        {
+            IsTerminated = true;
+        }
+
+        private void _KeyDown(object sender, KeyEventArgs e)
+        {
+            backpropNetwork = null;
+            nodesLabel.Text = "Nodes: 0";
+        }
+
+        private void alphabetCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            backpropNetwork = null;
+            nodesLabel.Text = "Nodes: 0";
         }
     }
 }
