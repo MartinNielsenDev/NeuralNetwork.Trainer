@@ -31,7 +31,7 @@ namespace NeuralNetwork.Trainer
         {
         }
 
-        public virtual void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public virtual void Save(List<double> saveData)
         {
         }
 
@@ -39,13 +39,10 @@ namespace NeuralNetwork.Trainer
         {
         }
 
-        public virtual void SaveToFile(string fileName)
+        public virtual void SaveToFile()
         {
             List<double> saveData = new List<double>();
-            Stream stream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
-            var binaryWriter = new BinaryWriter(stream);
-            Save(binaryWriter, saveData);
-            stream.Close();
+            Save(saveData);
             string stringArray = string.Join(",", saveData.ToArray());
 
             File.WriteAllText(@"traineddata.txt", "{" + stringArray + "};");
@@ -55,10 +52,7 @@ namespace NeuralNetwork.Trainer
         public virtual void LoadFromArray(double[] neuralNetworkData)
         {
             loadDataIndex = 0;
-            //Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-            //var binaryReader = new BinaryReader(stream);
             Load(neuralNetworkData);
-            //stream.Close();
         }
 
         public static int RoundToNextInt(double value)
@@ -147,11 +141,10 @@ namespace NeuralNetwork.Trainer
             linkWeight = ExtractDataFromArray(loadData);
         }
 
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
-            base.Save(binaryWriter, saveData);
+            base.Save(saveData);
             saveData.Add(linkWeight);
-            binaryWriter.Write(linkWeight);
         }
 
         public void SetInNode(NeuroNode node)
@@ -385,13 +378,11 @@ namespace NeuralNetwork.Trainer
             nodeError = ExtractDataFromArray(loadData);
         }
 
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
-            base.Save(binaryWriter, saveData);
+            base.Save(saveData);
             saveData.Add(nodeValue);
             saveData.Add(nodeError);
-            binaryWriter.Write(nodeValue);
-            binaryWriter.Write(nodeError);
         }
     }
 
@@ -451,10 +442,9 @@ namespace NeuralNetwork.Trainer
                 throw new ENeuroException("Cannot load data. Invalid format.");
         }
 
-        private void SaveNetworkType(BinaryWriter binaryWriter, List<double> saveData)
+        private void SaveNetworkType(List<double> saveData)
         {
             saveData.Add((int)NetworkType);
-            binaryWriter.Write((int)NetworkType);
         }
 
         protected virtual void CreateNetwork()
@@ -499,21 +489,19 @@ namespace NeuralNetwork.Trainer
             }
         }
 
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
-            SaveNetworkType(binaryWriter, saveData);
+            SaveNetworkType(saveData);
             saveData.Add(NodesCount);
             saveData.Add(LinksCount);
-            binaryWriter.Write(NodesCount);
-            binaryWriter.Write(LinksCount);
 
             foreach (var node in nodes)
             {
-                node.Save(binaryWriter, saveData);
+                node.Save(saveData);
             }
             foreach (var link in links)
             {
-                link.Save(binaryWriter, saveData);
+                link.Save(saveData);
             }
         }
 

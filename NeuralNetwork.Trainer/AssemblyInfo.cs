@@ -10,8 +10,8 @@ using System.Reflection;
 [assembly: AssemblyCulture("")]		
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
-[assembly: AssemblyVersion("1.0.2.0")]
+[assembly: AssemblyVersion("1.0.3.0")]
 [assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyFileVersion("1.0.2.0")]
+[assembly: AssemblyFileVersion("1.0.3.0")]
 [assembly: NeutralResourcesLanguage("en")]
 

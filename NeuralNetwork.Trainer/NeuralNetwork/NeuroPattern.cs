@@ -23,22 +23,18 @@ namespace NeuralNetwork.Trainer.Patterns
 
         public int OutputsCount { get; private set; }
 
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
             saveData.Add(InputsCount);
             saveData.Add(OutputsCount);
-            binaryWriter.Write(InputsCount);
-            binaryWriter.Write(OutputsCount);
 
             foreach (var d in Input)
             {
                 saveData.Add(d);
-                binaryWriter.Write(d);
             }
             foreach (var d in Output)
             {
                 saveData.Add(d);
-                binaryWriter.Write(d);
             }
         }
 
@@ -71,11 +67,10 @@ namespace NeuralNetwork.Trainer.Patterns
             LoadFromFile(fileName);
         }
 
-        public virtual void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public virtual void Save(List<double> saveData)
         {
             saveData.Add(Count);
-            binaryWriter.Write(Count);
-            foreach (NeuroObject obj in this) obj.Save(binaryWriter, saveData);
+            foreach (NeuroObject obj in this) obj.Save(saveData);
         }
 
         public virtual void Load(BinaryReader binaryReader, double[] loadData)
@@ -106,7 +101,7 @@ namespace NeuralNetwork.Trainer.Patterns
             List<double> saveData = new List<double>();
             Stream stream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
             var binaryWriter = new BinaryWriter(stream);
-            Save(binaryWriter, saveData);
+            Save(saveData);
             stream.Close();
         }
     }

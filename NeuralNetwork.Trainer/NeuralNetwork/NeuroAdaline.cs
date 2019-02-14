@@ -186,11 +186,10 @@ namespace NeuralNetwork.Trainer.adaline
             base.Load(loadData);
             learningRate = ExtractDataFromArray(loadData);
         }
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
-            base.Save(binaryWriter, saveData);
+            base.Save(saveData);
             saveData.Add(learningRate);
-            binaryWriter.Write(learningRate);
         }
     }
 }

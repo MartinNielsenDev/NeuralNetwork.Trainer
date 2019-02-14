@@ -95,6 +95,12 @@
     <Compile Include="GUI.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="LoadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadForm.Designer.cs">
+      <DependentUpon>LoadForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="NeuralNetwork\NeuroAdaline.cs" />
     <Compile Include="NeuralNetwork\NeuroBackProp.cs" />
     <Compile Include="NeuralNetwork\NeuroBAM.cs" />
@@ -109,6 +115,9 @@
     </Compile>
     <EmbeddedResource Include="GUI.resx">
       <DependentUpon>GUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoadForm.resx">
+      <DependentUpon>LoadForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

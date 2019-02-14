@@ -58,11 +58,10 @@ namespace NeuralNetwork.Trainer.bam
             nodesLastValue = ExtractDataFromArray(loadData);
         }
 
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
-            base.Save(binaryWriter, saveData);
+            base.Save(saveData);
             saveData.Add(nodesLastValue);
-            binaryWriter.Write(nodesLastValue);
         }
     }
 
@@ -251,14 +250,12 @@ namespace NeuralNetwork.Trainer.bam
             base.Load(loadData);
         }
 
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
             saveData.Add(inputLayerNodesCount);
             saveData.Add(outputLayerNodesCount);
-            binaryWriter.Write(inputLayerNodesCount);
-            binaryWriter.Write(outputLayerNodesCount);
 
-            base.Save(binaryWriter, saveData);
+            base.Save(saveData);
         }
     }
 
@@ -378,15 +375,14 @@ namespace NeuralNetwork.Trainer.bam
             }
         }
 
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
-            base.Save(binaryWriter, saveData);
+            base.Save(saveData);
             saveData.Add(networksCount);
-            binaryWriter.Write(networksCount);
 
             for (var i = 0; i < networksCount; i++)
             {
-                networks[i].Save(binaryWriter, saveData);
+                networks[i].Save(saveData);
             }
         }
 

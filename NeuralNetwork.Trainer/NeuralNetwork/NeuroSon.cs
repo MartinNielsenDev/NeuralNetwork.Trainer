@@ -215,16 +215,8 @@ namespace NeuralNetwork.Trainer.son
             }
         }
 
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
-            binaryWriter.Write(initialLearningRate);
-            binaryWriter.Write(finalLearningRate);
-            binaryWriter.Write(initialNeighborhoodSize);
-            binaryWriter.Write(neighborhoodReduceInterval);
-            binaryWriter.Write(trainingIterations);
-            binaryWriter.Write(rowsCount);
-            binaryWriter.Write(columsCount);
-
             saveData.Add(initialLearningRate);
             saveData.Add(finalLearningRate);
             saveData.Add(initialNeighborhoodSize);
@@ -233,12 +225,12 @@ namespace NeuralNetwork.Trainer.son
             saveData.Add(rowsCount);
             saveData.Add(columsCount);
 
-            base.Save(binaryWriter, saveData);
+            base.Save(saveData);
             for (var r = 0; r < rowsCount; r++)
             {
                 for (var c = 0; c < columsCount; c++)
                 {
-                    kohonenLayer[r, c].Save(binaryWriter, saveData);
+                    kohonenLayer[r, c].Save(saveData);
                 }
             }
         }

@@ -59,11 +59,10 @@ namespace NeuralNetwork.Trainer.BackProp
             }
         }
 
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
-            base.Save(binaryWriter, saveData);
+            base.Save(saveData);
             saveData.Add(linkDelta);
-            binaryWriter.Write(linkDelta);
         }
 
         public override void UpdateWeight(double deltaWeight)
@@ -138,13 +137,11 @@ namespace NeuralNetwork.Trainer.BackProp
             }
         }
 
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
-            base.Save(binaryWriter, saveData);
+            base.Save(saveData);
             saveData.Add(momentum);
             saveData.Add(learningRate);
-            binaryWriter.Write(momentum);
-            binaryWriter.Write(learningRate);
         }
 
         public override void Learn()
@@ -333,17 +330,15 @@ namespace NeuralNetwork.Trainer.BackProp
             base.Load(loadData);
         }
 
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
             saveData.Add(layersCount);
-            binaryWriter.Write(layersCount);
 
             for (var i = 0; i < layersCount; i++)
             {
                 saveData.Add(nodesInLayer[i]);
-                binaryWriter.Write(nodesInLayer[i]);
             }
-            base.Save(binaryWriter, saveData);
+            base.Save(saveData);
         }
 
         public override void Run()
@@ -428,11 +423,10 @@ namespace NeuralNetwork.Trainer.BackProp
             linkEpoch = ExtractDataFromArray(loadData);
         }
 
-        public override void Save(BinaryWriter binaryWriter, List<double> saveData)
+        public override void Save(List<double> saveData)
         {
-            base.Save(binaryWriter, saveData);
+            base.Save(saveData);
             saveData.Add(linkEpoch);
-            binaryWriter.Write(linkEpoch);
         }
 
         public override void UpdateWeight(double deltaWeight)
