@@ -319,7 +319,7 @@ namespace NeuralNetwork.Trainer
             this.numbersOrAlphabetButton.Name = "numbersOrAlphabetButton";
             this.numbersOrAlphabetButton.Size = new System.Drawing.Size(70, 24);
             this.numbersOrAlphabetButton.TabIndex = 51;
-            this.numbersOrAlphabetButton.Text = "MAPS";
+            this.numbersOrAlphabetButton.Text = "PLAYERS";
             this.numbersOrAlphabetButton.UseVisualStyleBackColor = false;
             this.numbersOrAlphabetButton.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -480,7 +480,8 @@ namespace NeuralNetwork.Trainer
                     }
                     else
                     {
-                        randomFile = listOfFiles[index];
+                        randomFile = listOfFiles[(int)Random(0, listOfFiles.Length - 1)];
+                        //randomFile = listOfFiles[index];
                     }
 
                     trainingSet[i] = randomFile;
@@ -495,17 +496,16 @@ namespace NeuralNetwork.Trainer
 
                 for (int inputSets = 0; inputSets < Convert.ToInt32(owner.iterationsTextBox.Text); inputSets++)
                 {
+                    Console.WriteLine("Running input set " + inputSets);
                     if (!GetRandomInput(inputSets)) break;
                     patterns = owner.CreateTrainingPatterns();
-                    double error = 0;
                     int good = 0;
 
                     while (good < patterns.Count)
                     {
                         if (IsTerminated) return;
-                        error = 0;
                         good = 0;
-
+  
                         for (int i = 0; i < patterns.Count; i++)
                         {
                             for (int k = 0; k < NodesInLayer(0); k++)
@@ -513,11 +513,10 @@ namespace NeuralNetwork.Trainer
                                 nodes[k].Value = patterns[i].Input[k];
                             }
 
-                            AddNoiseToInputPattern((int)Random(1, 3));
+                            //AddNoiseToInputPattern((int)Random(1, 3));
                             Run();
                             for (int k = 0; k < OutputNodesCount; k++)
                             {
-                                error += Math.Abs(OutputNode(k).Error);
                                 OutputNode(k).Error = patterns[i].Output[k];
                             }
                             Learn();
@@ -527,7 +526,7 @@ namespace NeuralNetwork.Trainer
                             iteration++;
                             Application.DoEvents();
                         }
-
+                        
                         foreach (NeuroLink link in links) ((EpochBackPropagationLink)link).Epoch(patterns.Count);
 
                         owner.textBox1.Text = $"Running Time: {(double)timer.ElapsedMilliseconds}ms{Environment.NewLine}Iterations: {iteration}{Environment.NewLine}";
@@ -537,7 +536,31 @@ namespace NeuralNetwork.Trainer
                 }
             }
         }
+        public Bitmap GenerateNoise(Bitmap original, int percent)
+        {
+            Random r = new Random();
 
+            for (int x = 1; x < original.Width - 1; x++)
+            {
+                for (int y = 1; y < original.Height - 1; y++)
+                {
+                    int random = r.Next(0, 101);
+                    if (random <= percent)
+                    {
+                        if (original.GetPixel(x + 1, y).R == 255 || // right side
+                            original.GetPixel(x, y + 1).R == 255 || // bottom
+                            original.GetPixel(x - 1, y).R == 255 || // left
+                            original.GetPixel(x, y - 1).R == 255 // top
+                            )
+                        {
+                            original.SetPixel(x, y, Color.FromArgb(255, 255, 255, 255));
+                        }
+                    }
+                }
+            }
+            //original.Save(@"C:\Users\mani\Desktop\playerlist\noise\" + Guid.NewGuid() + ".png");
+            return original;
+        }
         public PatternsCollection CreateTrainingPatterns()
         {
             int matrixWidth = Convert.ToInt32(matrixWidthTextBox.Text);
@@ -546,7 +569,7 @@ namespace NeuralNetwork.Trainer
 
             for (int i = 0; i < trainingSet.Length; i++)
             {
-                Bitmap original = new Bitmap(trainingSet[i]);
+                Bitmap original = GenerateNoise(new Bitmap(trainingSet[i]), 5);
 
                 double[] aBitMatrix = CharToDoubleArray(original, matrixWidth, matrixHeight);
 
@@ -662,6 +685,7 @@ namespace NeuralNetwork.Trainer
             else if(numbersOrAlphabetButton.Text == "PLAYERS")
             {
                 textBox1.Text += "Players Test: " + Test("\\..\\..\\TrainData\\players\\train_data\\").ToString() + "%" + Environment.NewLine;
+                textBox1.Text += "Real Players Test: " + Test("\\..\\..\\TrainData\\players\\real_train_data\\").ToString() + "%" + Environment.NewLine;
             }
             else
             {
