@@ -4,7 +4,6 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
@@ -151,7 +150,7 @@ namespace NeuralNetwork.Trainer
             this.iterationsTextBox.Name = "iterationsTextBox";
             this.iterationsTextBox.Size = new System.Drawing.Size(70, 26);
             this.iterationsTextBox.TabIndex = 42;
-            this.iterationsTextBox.Text = "1";
+            this.iterationsTextBox.Text = "50";
             this.iterationsTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // matrixXLabel
@@ -382,6 +381,7 @@ namespace NeuralNetwork.Trainer
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Neural Network Trainer";
             this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
+            this.Load += new System.EventHandler(this.GUI_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -396,6 +396,7 @@ namespace NeuralNetwork.Trainer
 
         static public bool IsTerminated;
         public static string workingPath = String.Empty;
+        public static double highest = 0;
         public class OCRNetwork : BackPropagationRPROPNetwork
         {
             private GUI owner;
@@ -454,9 +455,9 @@ namespace NeuralNetwork.Trainer
                     {
                         listOfFiles = Directory.GetFiles(workingPath, Convert.ToChar('A' + i) + "*.png");
                     }
-                    else if(trainingSet.Length == 35)
+                    else if (trainingSet.Length == 35)
                     {
-                        if(i < 9)
+                        if (i < 9)
                         {
                             listOfFiles = Directory.GetFiles(workingPath, (i + 1) + "*.png");
                         }
@@ -496,7 +497,6 @@ namespace NeuralNetwork.Trainer
 
                 for (int inputSets = 0; inputSets < Convert.ToInt32(owner.iterationsTextBox.Text); inputSets++)
                 {
-                    Console.WriteLine("Running input set " + inputSets);
                     if (!GetRandomInput(inputSets)) break;
                     patterns = owner.CreateTrainingPatterns();
                     int good = 0;
@@ -504,8 +504,7 @@ namespace NeuralNetwork.Trainer
                     while (good < patterns.Count)
                     {
                         if (IsTerminated) return;
-                        good = 0;
-  
+
                         for (int i = 0; i < patterns.Count; i++)
                         {
                             for (int k = 0; k < NodesInLayer(0); k++)
@@ -513,7 +512,7 @@ namespace NeuralNetwork.Trainer
                                 nodes[k].Value = patterns[i].Input[k];
                             }
 
-                            //AddNoiseToInputPattern((int)Random(1, 3));
+                            //AddNoiseToInputPattern((int)Random(0, 3));
                             Run();
                             for (int k = 0; k < OutputNodesCount; k++)
                             {
@@ -526,13 +525,11 @@ namespace NeuralNetwork.Trainer
                             iteration++;
                             Application.DoEvents();
                         }
-                        
                         foreach (NeuroLink link in links) ((EpochBackPropagationLink)link).Epoch(patterns.Count);
 
                         owner.textBox1.Text = $"Running Time: {(double)timer.ElapsedMilliseconds}ms{Environment.NewLine}Iterations: {iteration}{Environment.NewLine}";
-                        owner.progressBar.Value = good;
+                        owner.progressBar.Value = inputSets + 1;
                     }
-                    owner.textBox1.Text = $"Running Time: {(double)timer.ElapsedMilliseconds}ms{Environment.NewLine}Iterations: {iteration}{Environment.NewLine}";
                 }
             }
         }
@@ -558,7 +555,6 @@ namespace NeuralNetwork.Trainer
                     }
                 }
             }
-            //original.Save(@"C:\Users\mani\Desktop\playerlist\noise\" + Guid.NewGuid() + ".png");
             return original;
         }
         public PatternsCollection CreateTrainingPatterns()
@@ -569,8 +565,8 @@ namespace NeuralNetwork.Trainer
 
             for (int i = 0; i < trainingSet.Length; i++)
             {
-                Bitmap original = GenerateNoise(new Bitmap(trainingSet[i]), 5);
-
+                Bitmap original;
+                original = new Bitmap(trainingSet[i]);
                 double[] aBitMatrix = CharToDoubleArray(original, matrixWidth, matrixHeight);
 
                 for (int j = 0; j < Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text); j++)
@@ -634,14 +630,13 @@ namespace NeuralNetwork.Trainer
             {
                 workingPath = Path.GetDirectoryName(openFileDialog2.FileName);
             }
-            int inputs =  GetInputs(numbersOrAlphabetButton.Text);
-            progressBar.Maximum = inputs;
+            int inputs = GetInputs(numbersOrAlphabetButton.Text);
             backpropNetwork = new OCRNetwork(this, new int[3] { Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text), (Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text) + inputs) / 2, inputs });
             nodesLabel.Text = "Nodes: " + inputs;
         }
         public int GetInputs(string text)
         {
-            switch(text)
+            switch (text)
             {
                 case "MAPS":
                     return 26;
@@ -654,7 +649,7 @@ namespace NeuralNetwork.Trainer
             }
         }
 
-        private void trainNetwork_Click(object sender, System.EventArgs e)
+        private void trainNetwork_Click(object sender, EventArgs e)
         {
             IsTerminated = false;
             if (backpropNetwork == null)
@@ -663,9 +658,7 @@ namespace NeuralNetwork.Trainer
                 return;
             }
             if (IsTerminated) return;
-            int inputs = GetInputs(numbersOrAlphabetButton.Text);
-            backpropNetwork = new OCRNetwork(this, new int[3] { Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text), (Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text) + inputs) / 2, inputs });
-            backpropNetwork.Train(trainingPatterns);
+            RunTraining();
         }
         private void TestButton_Click(object sender, EventArgs e)
         {
@@ -675,24 +668,57 @@ namespace NeuralNetwork.Trainer
                 MessageBox.Show("Create network first");
                 return;
             }
+            RunTests();
+        }
+        private void RunTraining()
+        {
+            int inputs = GetInputs(numbersOrAlphabetButton.Text);
+            progressBar.Maximum = Convert.ToInt32(iterationsTextBox.Text);
+            backpropNetwork = new OCRNetwork(this, new int[3] { Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text), (Convert.ToInt32(matrixWidthTextBox.Text) * Convert.ToInt32(matrixHeightTextBox.Text) + inputs) / 2, inputs });
+            backpropNetwork.Train(trainingPatterns);
+            //RunTests(); // uncomment this to run tests right after training is done
+        }
+        private void RunTests()
+        {
             testTimer.Restart();
             textBox1.Text = "Tests finished!" + Environment.NewLine + Environment.NewLine;
+            double test1, test2;
             if (numbersOrAlphabetButton.Text == "MAPS")
             {
-                textBox1.Text += "Maps Test: " + Test("\\..\\..\\TrainData\\maps\\test_data\\").ToString() + "%" + Environment.NewLine;
-                textBox1.Text += "Maps Test: " + Test("\\..\\..\\TrainData\\maps\\train_data\\").ToString() + "%" + Environment.NewLine;
+                test1 = Test("\\..\\..\\TrainData\\maps\\test_data\\");
+                test2 = Test("\\..\\..\\TrainData\\maps\\train_data\\");
+                textBox1.Text += "Maps Test: " + test1.ToString() + "%" + Environment.NewLine;
+                textBox1.Text += "Maps Test: " + test2.ToString() + "%" + Environment.NewLine;
             }
-            else if(numbersOrAlphabetButton.Text == "PLAYERS")
+            else if (numbersOrAlphabetButton.Text == "PLAYERS")
             {
-                textBox1.Text += "Players Test: " + Test("\\..\\..\\TrainData\\players\\train_data\\").ToString() + "%" + Environment.NewLine;
-                textBox1.Text += "Real Players Test: " + Test("\\..\\..\\TrainData\\players\\real_train_data\\").ToString() + "%" + Environment.NewLine;
+                //test1 = Test("\\..\\..\\TrainData\\players\\train_data\\");
+                test2 = Test("\\..\\..\\TrainData\\players\\real_train_data\\");
+                //textBox1.Text += "Players Test: " + test1.ToString() + "%" + Environment.NewLine;
+                textBox1.Text += "Real Players Test: " + test2.ToString() + "%" + Environment.NewLine;
             }
-            else
+            else if (numbersOrAlphabetButton.Text == "STATS")
             {
-                textBox1.Text += "Ratings Test: " + Test("\\..\\..\\TrainData\\ratings\\test_data\\").ToString() + "%" + Environment.NewLine;
-                textBox1.Text += "Numbers Test: " + Test("\\..\\..\\TrainData\\numbers\\test_data\\").ToString() + "%" + Environment.NewLine;
+                test1 = Test("\\..\\..\\TrainData\\ratings\\test_data\\");
+                test2 = Test("\\..\\..\\TrainData\\numbers\\test_data\\");
+                textBox1.Text += "Ratings Test: " + test1.ToString() + "%" + Environment.NewLine;
+                textBox1.Text += "Numbers Test: " + test2.ToString() + "%" + Environment.NewLine;
             }
             testTimer.Stop();
+            // uncomment this to keep running forever until 100% accuracy is reached
+            /*
+            double result = test2;
+            if(result > highest)
+            {
+                highest = result;
+                backpropNetwork.SaveToFile();
+            }
+            if (result < 100)
+            {
+                Console.WriteLine(result + "% running again");
+                RunTraining();
+            }
+            */
         }
         private double Test(string path)
         {
@@ -711,7 +737,7 @@ namespace NeuralNetwork.Trainer
                     {
                         listOfFiles = Directory.GetFiles(Directory.GetCurrentDirectory() + path, Convert.ToChar('A' + j) + "*.png"); // for the alphabet
                     }
-                    else if(numbersOrAlphabetButton.Text == "PLAYERS")
+                    else if (numbersOrAlphabetButton.Text == "PLAYERS")
                     {
                         if (j < 9)
                         {
@@ -755,7 +781,7 @@ namespace NeuralNetwork.Trainer
                 textBox1.Text = "Running Time: " + (double)testTimer.ElapsedMilliseconds + "ms" + Environment.NewLine;
                 Application.DoEvents();
             }
-            return Math.Floor(((double)correct / (double)trainingSet.Length) * 100 / iterations);
+            return Math.Round(((double)correct / (double)trainingSet.Length) * 100 / iterations, 2);
         }
         private void SaveNetwork_Click(object sender, System.EventArgs e)
         {
@@ -798,7 +824,7 @@ namespace NeuralNetwork.Trainer
                 {
                     recognizedResultLabel.Text = Convert.ToChar('A' + backpropNetwork.BestNodeIndex).ToString();
                 }
-                else if(numbersOrAlphabetButton.Text == "PLAYERS")
+                else if (numbersOrAlphabetButton.Text == "PLAYERS")
                 {
                     int bestIndex = backpropNetwork.BestNodeIndex;
                     if (bestIndex < 9)
@@ -840,7 +866,7 @@ namespace NeuralNetwork.Trainer
             {
                 numbersOrAlphabetButton.Text = "STATS";
             }
-            else if(numbersOrAlphabetButton.Text.Equals("STATS"))
+            else if (numbersOrAlphabetButton.Text.Equals("STATS"))
             {
                 numbersOrAlphabetButton.Text = "PLAYERS";
             }
@@ -858,6 +884,10 @@ namespace NeuralNetwork.Trainer
                 return;
             }
             Program.loadForm.Show();
+        }
+
+        private void GUI_Load(object sender, EventArgs e)
+        {
         }
     }
 }
